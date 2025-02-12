@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Assistance System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body{
+		 font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: rgba(255, 165, 0, 0.8);
+            color: white;
+            padding: 15px;
+            font-size: 1.5em;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            background: #333;
+        }
+        nav ul li {
+            padding: 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            margin-top: 10px;
+            border: none;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .emergency {
+            background: red;
+        }
+        .task-list {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .task-item {
+            background: #eee;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .remove-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .content-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+            margin-top: 20px;
+        }
+        .quote {
+            width: 45%;
+            font-style: italic;
+            font-size: 1.2em;
+            padding: 20px;
+            background: #fff3cd;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .video-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .video-container video {
+            width: 50%;
+            border-radius: 10px;
+			
+        }
+		.description {
+            width: 45%;
+            padding: 20px;
+            background: #e3f2fd;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+		 .emergency {
+            background: red;
+        }
+		 .meal-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        padding: 20px;
+    }
+    .meal-item {
+        background: white;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .meal-item img {
+        width: 100%;
+        border-radius: 10px;
+    }
+    .meal-item p {
+        font-weight: bold;
+        margin-top: 10px;
+    }
+	.emergency {
+            background: red;
+        }
+        .video-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .video-container video {
+            width: 50%;
+            border-radius: 10px;
+        }
+        .description {
+            width: 45%;
+            padding: 20px;
+            background: #e3f2fd;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+		.task-list, .grocery-list {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .task-item, .grocery-item {
+            background: #eee;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .remove-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+		  .grocery-list {
+            text-align: left;
+            margin: 20px auto;
+            width: 50%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .grocery-item {
+            background: #eee;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .order-btn {
+            background: #28a745;
+            color: white;
+            padding: 10px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+		</style>
+	<script>
+	
+        
+	function addTask() {
+            let taskInput = document.getElementById("taskInput");
+            let taskList = document.getElementById("taskList");
+            if (taskInput.value.trim() !== "") {
+                let taskItem = document.createElement("div");
+                taskItem.className = "task-item";
+                taskItem.innerHTML = `<span>${taskInput.value}</span> <button class='remove-btn' onclick='removeTask(this)'>Remove</button>`;
+                taskList.appendChild(taskItem);
+                taskInput.value = "";
+            }
+        }
+	 document.addEventListener("DOMContentLoaded", function() {
+            let groceryList = document.getElementById("groceryList");
+            let prefilledItems = ["Milk", "Bread", "Eggs", "Vegetables", "Fruits", "Rice", "Chicken"];
+            prefilledItems.forEach(item => {
+                let groceryItem = document.createElement("div");
+                groceryItem.className = "grocery-item";
+                groceryItem.innerHTML = `<span>${item}</span> <button class='remove-btn' onclick='removeGrocery(this)'>Remove</button>`;
+                groceryList.appendChild(groceryItem);
+            });
+        });
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            let taskList = document.getElementById("taskList");
+            let groceryList = document.getElementById("groceryList");
+            let prefilledTasks = ["Take morning walk", "Drink water", "Take medicine", "Read a book"];
+            let prefilledGroceries = ["Milk", "Bread", "Eggs", "Vegetables"];
+
+            prefilledTasks.forEach(task => {
+                addTaskToList(task);
+            });
+
+            prefilledGroceries.forEach(item => {
+                addGroceryToList(item);
+            });
+        });
+        
+        function addTask() {
+            let taskInput = document.getElementById("taskInput");
+            if (taskInput.value.trim() !== "") {
+                addTaskToList(taskInput.value);
+                taskInput.value = "";
+            }
+        }
+
+        function addTaskToList(task) {
+            let taskList = document.getElementById("taskList");
+            let taskItem = document.createElement("div");
+            taskItem.className = "task-item";
+            taskItem.innerHTML = `<span>${task}</span> <button class='remove-btn' onclick='removeItem(this)'>Remove</button>`;
+            taskList.appendChild(taskItem);
+        }
+
+        
+        function addGroceryToList(item) {
+            let groceryList = document.getElementById("groceryList");
+            let groceryItem = document.createElement("div");
+            groceryItem.className = "grocery-item";
+            groceryItem.innerHTML = `<span>${item}</span> <button class='remove-btn' onclick='removeItem(this)'>Remove</button>`;
+            groceryList.appendChild(groceryItem);
+        }
+		function addGrocery() {
+            let groceryInput = document.getElementById("groceryInput");
+            let groceryList = document.getElementById("groceryList");
+            if (groceryInput.value.trim() !== "") {
+                let groceryItem = document.createElement("div");
+                groceryItem.className = "grocery-item";
+                groceryItem.innerHTML = `<span>${groceryInput.value}</span> <button class='remove-btn' onclick='removeGrocery(this)'>Remove</button>`;
+                groceryList.appendChild(groceryItem);
+                groceryInput.value = "";
+            }
+        }
+        
+        function removeGrocery(button) {
+            button.parentElement.remove();
+        }
+
+        function removeItem(button) {
+            button.parentElement.remove();
+        } 
+		function emergencyAlert() {
+            alert("Emergency Alert Sent to Caregiver and Hospital!");
+        }
+		function sendEmergencyAlert() {
+            alert("Emergency Alert Sent to Caregiver and Hospital!");
+            fetch("http://127.0.0.1:5000/send_sms", { method: "POST" });
+        }
+		 function speakReminder(message) {
+    let utterance = new SpeechSynthesisUtterance(message);
+    speechSynthesis.speak(utterance);
+}
+
+let lastSpokenTime = null;
+
+function checkTimeAndSpeak() {
+    let now = new Date();
+    let currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+    let reminders = {
+        "07:30": "It's time for breakfast.",
+        "12:30": "It's time for lunch.",
+        "18:30": "It's time for dinner.",
+        "09:00": "Drink water.",
+        "03:27": "Time to take your medicine."
+    };
+
+    if (reminders[currentTime] && lastSpokenTime !== currentTime) {
+        speakReminder(reminders[currentTime]);
+        lastSpokenTime = currentTime; // Prevent duplicate speech in the same minute
+    }
+}
+
+// Check time every second to ensure accuracy
+setInterval(checkTimeAndSpeak, 1000);
+window.onload = checkTimeAndSpeak;
+
+
+    
+	
+	</script>
+</head>
+<body>
+    <header>
+        <h1>Digital Assistance for Elderly</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#home">HOME</a></li>
+            <li><a href="#medication">Medication Reminders</a></li>
+            <li><a href="#elderly-care">Elderly Care Plans</a></li>
+            <li><a href="#meal-planning">Meal Planning</a></li>
+            <li><a href="#emergency">Emergency Assistance</a></li>
+            <li><a href="#grocery">Grocery Shopping & To-Do Lists</a></li>
+        </ul>
+    </nav>
+	
+    <section id="home">
+        <img src="C:\Users\HP\Desktop\New folder\Major activities\image5.jpg" alt="Elderly struggling with daily tasks" style="width:100%; border-radius:10px;">
+        <div class="video-container">
+            <video controls>
+                <source src="C:\Users\HP\Desktop\New folder\Major activities\video1.mp4" type="video/mp4">
+            </video>
+            <div class="description">
+                <h1><p><strong>"To care for those who once cared for us is one of the highest honors."</strong><br>
+                </p></h1>
+            </div>
+        </div>
+    </section>
+     <section id="medication">
+        <h2>Daily Routine Management</h2>
+         <p>Set up and manage your daily tasks efficiently.</p>
+		 
+         <input type="text" id="taskInput" placeholder="Enter daily task">
+        <button onclick="addTask()">Add Task</button>
+        <div id="taskList" class="task-list"></div>
+		
+        <br><br>
+    </section>
+		
+       
+    <section id="medication">
+        <h2>Medication Reminders</h2>
+        <p>Stay on top of your medications with timely reminders.</p>
+		<div class="medication-grid">
+            <div class="medication-item">
+                <img src="C:\Users\HP\Desktop\New folder\Major activities\medicine.avif" alt="Morning Medicine">
+            </div>
+        </div>
+    </section>
+	
+	
+    <section id="meal-planning">
+    <h2>Meal Planning & Dietary Support</h2>
+    <p>Plan your meals and get dietary support tailored to your needs.</p>
+    <div class="meal-grid">
+	
+        <div class="meal-item">
+            <img src="C:\Users\HP\Desktop\New folder\Major activities\meal22.webp" alt="Healthy Breakfast">
+            <p>Healthy Breakfast</p>
+        </div>
+        <div class="meal-item">
+            <img src="C:\Users\HP\Desktop\New folder\Major activities\meal4.webp" alt="Nutritious Lunch">
+            <p>Nutritious Lunch</p>
+        </div>
+        <div class="meal-item">
+            <img src="C:\Users\HP\Desktop\New folder\Major activities\meal3.webp" alt="Light Dinner">
+            <p>Light Dinner</p>
+        </div>
+        <div class="meal-item">
+            <img src="C:\Users\HP\Desktop\New folder\Major activities\meal5.jpg" alt="Healthy Snacks">
+            <p>Healthy Snacks</p>
+        </div>
+    </div>
+       
+		
+        
+    </section>
+    <section id="emergency">
+        <h2>Emergency Assistance</h2>
+        <p>Quick access to emergency contacts and support.</p>
+        <button onclick="sendEmergencyAlert()">Emergency Help</button>
+    </section>
+	
+   <section id="grocery">
+        <h2>Grocery Shopping & To-Do Lists</h2>
+        <div id="groceryList" class="grocery-list"></div>
+        <button class="order-btn" onclick="orderGroceries()">Order Groceries</button>
+    </section>
+</body>
+</html>
